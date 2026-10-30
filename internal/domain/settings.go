@@ -4,6 +4,7 @@ package domain
 import (
 	"errors"
 	"fmt"
+	"slices"
 	"time"
 )
 
@@ -60,10 +61,5 @@ func (s Settings) Validate() error {
 
 // IsKnown reports whether the level is one of RecoveryLevels.
 func (l RecoveryLevel) IsKnown() bool {
-	for _, known := range RecoveryLevels {
-		if l == known {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(RecoveryLevels, l)
 }

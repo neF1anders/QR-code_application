@@ -1,49 +1,90 @@
-# Application QR-generator
-The application became my mini-project for consolidation of skills in programming on Golang.
+# qr
 
-## Content
-- [Idea](#Idea)
-- [Technologies](#Technologies)
-- [Usage](#Usage)
-- [Requirements](#Requirements)
-- [Approach](#Approach)
-- [Issues](#Issues)
+A tiny desktop CLI that shows text as a QR code in a window, so you can move a link from your PC to your phone without messengers or social networks: copy, type `qr`, scan.
 
-## Idea
-The main idea is to make a generator of QR-code for fast transfer of text information of text to the smartphone. 
-It was a problem for me, when i need to continue watching smth or reading an article on the way from my PC and there is a question "how to transfer the link?". I wanted to implement a transfer without disturbing effect of social networks. Just to copy the link. Only text.
-That`s why my idea is to copy the link, tap the button, scan the generated QR-code. Simple problem - simple solution.
+The app is fully local: it never goes online. Only the install script downloads a release from GitHub, when you run it.
 
-## Technologies
-- [Golang](https://go.dev/)
-- [clipboard](github.com/atotto/clipboard)
-- [qrcode lib](github.com/skip2/go-qrcode)
-- [hotkey` logging lib](golang.design/x/hotkey)
+## Install / update
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/neF1anders/QR-code_application/main/install.sh | sh
+```
+
+Running the same command again updates `qr` to the latest release. The binary goes to `~/.local/bin/qr` and needs no `sudo`; the script verifies the release checksum.
+
+Options (environment variables): `QR_VERSION=v0.1.0` installs a specific release, `QR_INSTALL_DIR=/some/dir` changes the target directory.
+
+Supported now: Linux x86_64 (tested on Ubuntu 24.04, GNOME on Wayland). Other systems will follow.
+
+Uninstall: `rm ~/.local/bin/qr && rm -rf ~/.config/qr ~/.cache/qr`.
 
 ## Usage
-The usage of this application is almost as complicated as its implementation due to some issues, that must be resolved, but they are not yet. 
-- Download the code in go file
-- Compile it with the libs, downloaded
-- Use .exe to generate the code once
 
-### Requirements
-See [Technologies](#Technologies)
+```sh
+qr                    # encode the clipboard text
+qr https://example.com
+qr some words here    # words are joined with spaces
+qr -- --settings      # encode text that starts with "-"
+qr --settings         # change settings with dropdown lists
+qr --version
+qr --help
+```
 
-## Approach
-My implementation consists of such steps as:
-- Logging the hotkey command (Ctrl + F1 in my code)
-- Opening the localhost for listen-serve
-- Generating an image of QR-code with lib and serving to localhost
-- Closing the host after 30 seconds
+The window closes with its close button or `Esc`.
 
-## Issues
-My application is not ideal at all. I need to tackle these problems:
-- The application works once, generates the code and don`t read the hotkeys until the application is reloaded
-- The application never stops consuming the RAM after finishing the generation. The architecture must be fixed
-- The application has no settings for setting the hotkeys, the 'background' mode and so on
-- No autoload with system
+## Settings
 
-There are also some ideas to decorate the application:
-- Autoload with system as a auto-enabled function
-- API or the extension mode for Chrome (i don`t now is it possible)
-- The simple interface to interact with app not by writing code
+`qr --settings` saves to `~/.config/qr/config.json`:
+
+```json
+{
+  "ttl_seconds": 0,
+  "size_px": 384,
+  "recovery_level": "medium"
+}
+```
+
+| Setting | Meaning |
+|---|---|
+| `ttl_seconds` | How long the QR image stays on disk in `~/.cache/qr/`. `0` (default) deletes it as soon as the window closes. With `N > 0` the image is kept for N seconds; expired images are removed the next time `qr` runs. |
+| `size_px` | Image size, 128–2048. |
+| `recovery_level` | `low`, `medium`, `high` or `highest` error correction. Higher survives more damage, lower fits more text. |
+
+A missing or broken config falls back to the defaults with a warning.
+
+## Development
+
+Requirements: Go (see `go.mod`) and the GUI headers used by [Fyne](https://fyne.io):
+
+```sh
+sudo apt-get install libgl1-mesa-dev xorg-dev libwayland-dev libxkbcommon-dev
+```
+
+```sh
+go run ./cmd/qr hello        # run
+go test -race ./...          # tests
+go vet ./...
+gofmt -l .
+go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.15.0 run
+go run github.com/goreleaser/goreleaser/v2@latest release --snapshot --clean  # local release build
+```
+
+### Layout
+
+Dependencies point inwards: `cli`/`infra` → `app` → `domain`.
+
+```
+cmd/qr/            composition root: wires adapters into use cases
+internal/domain/   settings rules, QR image lifetime
+internal/app/      use cases (show QR, clean up expired images, manage settings) and their ports
+internal/infra/    clipboard, QR encoder, image storage, JSON config, Fyne window
+internal/cli/      argument parsing and the interactive settings form
+```
+
+### Releasing
+
+Push a tag `vX.Y.Z` to `main`. The `Release` workflow runs the tests, builds `qr_linux_amd64.tar.gz` with GoReleaser and publishes it with `checksums.txt` to GitHub Releases; `install.sh` picks it up from there.
+
+## History
+
+This started as a Go learning project: a global `Ctrl+F1` hotkey that served the QR code to a browser through `localhost`. It worked once per launch and kept running in the background, so it was rewritten as a CLI.

@@ -1,0 +1,13 @@
+version: "2"
+
+linters:
+  enable:
+    - errorlint
+    - misspell
+  exclusions:
+    presets:
+      - std-error-handling
+
+formatters:
+  enable:
+    - gofmt

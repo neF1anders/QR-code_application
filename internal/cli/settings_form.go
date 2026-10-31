@@ -10,7 +10,7 @@ import (
 
 	"github.com/charmbracelet/huh"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 // customTTL marks the "enter seconds manually" choice in the TTL list.

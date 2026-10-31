@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 type fileFormat struct {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 // ErrNothingToEncode is returned when the text to encode is empty or whitespace only.

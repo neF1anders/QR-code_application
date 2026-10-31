@@ -1,4 +1,4 @@
-module github.com/neF1anders/QR-code_application
+module github.com/neF1anders/qr
 
 go 1.27.3
 

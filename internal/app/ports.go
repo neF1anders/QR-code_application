@@ -4,7 +4,7 @@ package app
 import (
 	"time"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 // Clipboard reads the current text content of the system clipboard.

@@ -7,7 +7,7 @@ The app is fully local: it never goes online. Only the install script downloads 
 ## Install / update
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/neF1anders/QR-code_application/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/neF1anders/qr/main/install.sh | sh
 ```
 
 Running the same command again updates `qr` to the latest release. The binary goes to `~/.local/bin/qr` and needs no `sudo`; the script verifies the release checksum.

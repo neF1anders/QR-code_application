@@ -6,7 +6,7 @@ import (
 
 	"github.com/skip2/go-qrcode"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 var recoveryLevels = map[domain.RecoveryLevel]qrcode.RecoveryLevel{

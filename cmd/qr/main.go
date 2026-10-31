@@ -7,13 +7,13 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/neF1anders/QR-code_application/internal/app"
-	"github.com/neF1anders/QR-code_application/internal/cli"
-	"github.com/neF1anders/QR-code_application/internal/infra/clipboard"
-	"github.com/neF1anders/QR-code_application/internal/infra/config"
-	"github.com/neF1anders/QR-code_application/internal/infra/encoder"
-	"github.com/neF1anders/QR-code_application/internal/infra/storage"
-	"github.com/neF1anders/QR-code_application/internal/infra/viewer"
+	"github.com/neF1anders/qr/internal/app"
+	"github.com/neF1anders/qr/internal/cli"
+	"github.com/neF1anders/qr/internal/infra/clipboard"
+	"github.com/neF1anders/qr/internal/infra/config"
+	"github.com/neF1anders/qr/internal/infra/encoder"
+	"github.com/neF1anders/qr/internal/infra/storage"
+	"github.com/neF1anders/qr/internal/infra/viewer"
 )
 
 // version is set at release time via -ldflags "-X main.version=...".

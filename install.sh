@@ -1,7 +1,7 @@
 #!/bin/sh
 # Installs or updates the qr utility from GitHub Releases.
 #
-#   curl -fsSL https://raw.githubusercontent.com/neF1anders/QR-code_application/main/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/neF1anders/qr/main/install.sh | sh
 #
 # Environment:
 #   QR_VERSION      release tag to install, e.g. v0.1.0 (default: latest)
@@ -9,7 +9,7 @@
 #   QR_RELEASES_URL base URL of the releases (default: the GitHub repository)
 set -eu
 
-repo="neF1anders/QR-code_application"
+repo="neF1anders/qr"
 releases_url="${QR_RELEASES_URL:-https://github.com/$repo/releases}"
 version="${QR_VERSION:-latest}"
 install_dir="${QR_INSTALL_DIR:-$HOME/.local/bin}"

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 var errFake = errors.New("fake failure")

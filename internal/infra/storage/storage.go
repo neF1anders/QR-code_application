@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 // The creation time is encoded in the file name so lifetimes do not depend on file mtimes.

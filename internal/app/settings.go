@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 
-	"github.com/neF1anders/QR-code_application/internal/domain"
+	"github.com/neF1anders/qr/internal/domain"
 )
 
 // ManageSettings loads and saves the user settings.
